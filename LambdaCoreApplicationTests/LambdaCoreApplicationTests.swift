@@ -13,7 +13,6 @@ class LambdaCoreApplicationTests: XCTestCase {
         let useCase = LoginUseCase()
         let loginState = LoginState()
         let (state, effect) = useCase.receive(.initiateLogin, inState: loginState)
-        let viewTransition = 5
         XCTAssertEqual(effect, ViewTransition())
         XCTAssertEqual(state, LoginState())
     }
