@@ -10,14 +10,11 @@ import UIKit
 import LambdaCoreCore
 import LambdaCoreApplication
 class ViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         let m = Model()
         let o = LoginOrchestrator()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-
 }
 
