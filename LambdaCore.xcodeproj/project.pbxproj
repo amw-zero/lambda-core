@@ -19,6 +19,12 @@
 		A5E5A4CA21B36726003E80CF /* LambdaCoreCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4B521B36726003E80CF /* LambdaCoreCore.framework */; };
 		A5E5A4CB21B36726003E80CF /* LambdaCoreCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4B521B36726003E80CF /* LambdaCoreCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5E5A4D421B36741003E80CF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4D321B36741003E80CF /* Model.swift */; };
+		A5E5A4E321B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; };
+		A5E5A4EA21B367D8003E80CF /* LambdaCoreApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */; };
+		A5E5A4EC21B367D8003E80CF /* LambdaCoreApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A5E5A4EF21B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; };
+		A5E5A4F021B367D8003E80CF /* LambdaCoreApplication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +56,34 @@
 			remoteGlobalIDString = A5E5A4B421B36726003E80CF;
 			remoteInfo = LambdaCoreCore;
 		};
+		A5E5A4E421B367D8003E80CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5E5A48521B36631003E80CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5E5A4D921B367D8003E80CF;
+			remoteInfo = LambdaCoreApplication;
+		};
+		A5E5A4E621B367D8003E80CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5E5A48521B36631003E80CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5E5A48C21B36631003E80CF;
+			remoteInfo = LambdaCore;
+		};
+		A5E5A4ED21B367D8003E80CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5E5A48521B36631003E80CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5E5A4D921B367D8003E80CF;
+			remoteInfo = LambdaCoreApplication;
+		};
+		A5E5A4F921B36869003E80CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5E5A48521B36631003E80CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5E5A4B421B36726003E80CF;
+			remoteInfo = LambdaCoreCore;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +94,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A5E5A4CB21B36726003E80CF /* LambdaCoreCore.framework in Embed Frameworks */,
+				A5E5A4F021B367D8003E80CF /* LambdaCoreApplication.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +119,13 @@
 		A5E5A4C421B36726003E80CF /* LambdaCoreCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaCoreCoreTests.swift; sourceTree = "<group>"; };
 		A5E5A4C621B36726003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5E5A4D321B36741003E80CF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LambdaCoreApplication.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LambdaCoreApplication.h; sourceTree = "<group>"; };
+		A5E5A4DD21B367D8003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5E5A4E221B367D8003E80CF /* LambdaCoreApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambdaCoreApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaCoreApplicationTests.swift; sourceTree = "<group>"; };
+		A5E5A4EB21B367D8003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOrchestrator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E5A4CA21B36726003E80CF /* LambdaCoreCore.framework in Frameworks */,
+				A5E5A4EF21B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +160,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A5E5A4D721B367D8003E80CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E5A4DF21B367D8003E80CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E5A4E321B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -127,6 +185,8 @@
 				A5E5A4A421B36633003E80CF /* LambdaCoreTests */,
 				A5E5A4B621B36726003E80CF /* LambdaCoreCore */,
 				A5E5A4C321B36726003E80CF /* LambdaCoreCoreTests */,
+				A5E5A4DB21B367D8003E80CF /* LambdaCoreApplication */,
+				A5E5A4E821B367D8003E80CF /* LambdaCoreApplicationTests */,
 				A5E5A48E21B36631003E80CF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,6 +198,8 @@
 				A5E5A4A121B36633003E80CF /* LambdaCoreTests.xctest */,
 				A5E5A4B521B36726003E80CF /* LambdaCoreCore.framework */,
 				A5E5A4BD21B36726003E80CF /* LambdaCoreCoreTests.xctest */,
+				A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */,
+				A5E5A4E221B367D8003E80CF /* LambdaCoreApplicationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +245,25 @@
 			path = LambdaCoreCoreTests;
 			sourceTree = "<group>";
 		};
+		A5E5A4DB21B367D8003E80CF /* LambdaCoreApplication */ = {
+			isa = PBXGroup;
+			children = (
+				A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */,
+				A5E5A4DD21B367D8003E80CF /* Info.plist */,
+				A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */,
+			);
+			path = LambdaCoreApplication;
+			sourceTree = "<group>";
+		};
+		A5E5A4E821B367D8003E80CF /* LambdaCoreApplicationTests */ = {
+			isa = PBXGroup;
+			children = (
+				A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */,
+				A5E5A4EB21B367D8003E80CF /* Info.plist */,
+			);
+			path = LambdaCoreApplicationTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -191,6 +272,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E5A4C721B36726003E80CF /* LambdaCoreCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E5A4D521B367D8003E80CF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E5A4EC21B367D8003E80CF /* LambdaCoreApplication.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +299,7 @@
 			);
 			dependencies = (
 				A5E5A4C921B36726003E80CF /* PBXTargetDependency */,
+				A5E5A4EE21B367D8003E80CF /* PBXTargetDependency */,
 			);
 			name = LambdaCore;
 			productName = LambdaCore;
@@ -271,6 +361,44 @@
 			productReference = A5E5A4BD21B36726003E80CF /* LambdaCoreCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A5E5A4D921B367D8003E80CF /* LambdaCoreApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5E5A4F121B367D8003E80CF /* Build configuration list for PBXNativeTarget "LambdaCoreApplication" */;
+			buildPhases = (
+				A5E5A4D521B367D8003E80CF /* Headers */,
+				A5E5A4D621B367D8003E80CF /* Sources */,
+				A5E5A4D721B367D8003E80CF /* Frameworks */,
+				A5E5A4D821B367D8003E80CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5E5A4FA21B36869003E80CF /* PBXTargetDependency */,
+			);
+			name = LambdaCoreApplication;
+			productName = LambdaCoreApplication;
+			productReference = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A5E5A4E121B367D8003E80CF /* LambdaCoreApplicationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5E5A4F421B367D8003E80CF /* Build configuration list for PBXNativeTarget "LambdaCoreApplicationTests" */;
+			buildPhases = (
+				A5E5A4DE21B367D8003E80CF /* Sources */,
+				A5E5A4DF21B367D8003E80CF /* Frameworks */,
+				A5E5A4E021B367D8003E80CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5E5A4E521B367D8003E80CF /* PBXTargetDependency */,
+				A5E5A4E721B367D8003E80CF /* PBXTargetDependency */,
+			);
+			name = LambdaCoreApplicationTests;
+			productName = LambdaCoreApplicationTests;
+			productReference = A5E5A4E221B367D8003E80CF /* LambdaCoreApplicationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -296,6 +424,14 @@
 						CreatedOnToolsVersion = 10.1;
 						TestTargetID = A5E5A48C21B36631003E80CF;
 					};
+					A5E5A4D921B367D8003E80CF = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
+					};
+					A5E5A4E121B367D8003E80CF = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = A5E5A48C21B36631003E80CF;
+					};
 				};
 			};
 			buildConfigurationList = A5E5A48821B36631003E80CF /* Build configuration list for PBXProject "LambdaCore" */;
@@ -315,6 +451,8 @@
 				A5E5A4A021B36632003E80CF /* LambdaCoreTests */,
 				A5E5A4B421B36726003E80CF /* LambdaCoreCore */,
 				A5E5A4BC21B36726003E80CF /* LambdaCoreCoreTests */,
+				A5E5A4D921B367D8003E80CF /* LambdaCoreApplication */,
+				A5E5A4E121B367D8003E80CF /* LambdaCoreApplicationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -345,6 +483,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5E5A4BB21B36726003E80CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E5A4D821B367D8003E80CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E5A4E021B367D8003E80CF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,6 +539,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A5E5A4D621B367D8003E80CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E5A4DE21B367D8003E80CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E5A4EA21B367D8003E80CF /* LambdaCoreApplicationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -409,6 +577,26 @@
 			isa = PBXTargetDependency;
 			target = A5E5A4B421B36726003E80CF /* LambdaCoreCore */;
 			targetProxy = A5E5A4C821B36726003E80CF /* PBXContainerItemProxy */;
+		};
+		A5E5A4E521B367D8003E80CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5E5A4D921B367D8003E80CF /* LambdaCoreApplication */;
+			targetProxy = A5E5A4E421B367D8003E80CF /* PBXContainerItemProxy */;
+		};
+		A5E5A4E721B367D8003E80CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5E5A48C21B36631003E80CF /* LambdaCore */;
+			targetProxy = A5E5A4E621B367D8003E80CF /* PBXContainerItemProxy */;
+		};
+		A5E5A4EE21B367D8003E80CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5E5A4D921B367D8003E80CF /* LambdaCoreApplication */;
+			targetProxy = A5E5A4ED21B367D8003E80CF /* PBXContainerItemProxy */;
+		};
+		A5E5A4FA21B36869003E80CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5E5A4B421B36726003E80CF /* LambdaCoreCore */;
+			targetProxy = A5E5A4F921B36869003E80CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -719,6 +907,101 @@
 			};
 			name = Release;
 		};
+		A5E5A4F221B367D8003E80CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LambdaCoreApplication/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vts.LambdaCoreApplication;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A5E5A4F321B367D8003E80CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LambdaCoreApplication/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vts.LambdaCoreApplication;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A5E5A4F521B367D8003E80CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LambdaCoreApplicationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vts.LambdaCoreApplicationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LambdaCore.app/LambdaCore";
+			};
+			name = Debug;
+		};
+		A5E5A4F621B367D8003E80CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LambdaCoreApplicationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vts.LambdaCoreApplicationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LambdaCore.app/LambdaCore";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -763,6 +1046,24 @@
 			buildConfigurations = (
 				A5E5A4CE21B36726003E80CF /* Debug */,
 				A5E5A4CF21B36726003E80CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5E5A4F121B367D8003E80CF /* Build configuration list for PBXNativeTarget "LambdaCoreApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5E5A4F221B367D8003E80CF /* Debug */,
+				A5E5A4F321B367D8003E80CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5E5A4F421B367D8003E80CF /* Build configuration list for PBXNativeTarget "LambdaCoreApplicationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5E5A4F521B367D8003E80CF /* Debug */,
+				A5E5A4F621B367D8003E80CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
