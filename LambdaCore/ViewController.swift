@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import LambdaCoreCore
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let m = Model()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
