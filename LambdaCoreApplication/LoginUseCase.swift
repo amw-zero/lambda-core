@@ -9,32 +9,36 @@
 import Foundation
 enum LoginAction {
     case initiateLogin
+    case credentialInfoInput(username: String, password: String)
 }
 
-protocol Effect {
-    
-}
-struct ViewTransition: Effect {
+enum Effect {
+    case viewTransition
 }
 
-extension ViewTransition: Equatable {
-    static func == (lhs: ViewTransition, rhs: ViewTransition) -> Bool {
-        return true
-    }
-}
-
-struct LoginState {
-    
-}
-
-extension LoginState: Equatable {
-    static func == (lhs: LoginState, rhs: LoginState) -> Bool {
-        return true
+struct LoginState: Equatable {
+    let validEmail: Bool
+    init(validEmail: Bool = false) {
+        self.validEmail = validEmail
     }
 }
 
 struct LoginUseCase {
-    func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, ViewTransition?) {
-        return (state, ViewTransition())
+    func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect?) {
+        switch action {
+        case .initiateLogin:
+            return (state, .viewTransition)
+        case .credentialInfoInput(let username, let password):
+            if validInput(username, password) {
+                return (LoginState(validEmail: true), nil)
+            } else {
+                return (state, nil)
+            }
+        default:
+            return (state, nil)
+        }
+    }
+    func validInput(_ userName: String, _ password: String) -> Bool {
+        return !userName.isEmpty && !password.isEmpty
     }
 }
