@@ -19,5 +19,6 @@ public class LoginOrchestrator {
     public func receive(_ action: LoginAction) {
         let (newState, _) = useCase.receive(action, inState: state)
         state = newState
+        onNewState(newState)
     }
 }

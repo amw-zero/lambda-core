@@ -16,13 +16,13 @@ enum Effect {
     case viewTransition
 }
 
-enum AuthenticationScheme {
+public enum AuthenticationScheme {
     case password(validCredentials: Bool)
     case sso
 }
 
 extension AuthenticationScheme: Equatable {
-    static func == (lhs: AuthenticationScheme, rhs: AuthenticationScheme) -> Bool {
+    public static func == (lhs: AuthenticationScheme, rhs: AuthenticationScheme) -> Bool {
         switch (lhs, rhs) {
         case (.password(let lValidCredentials), .password(let rValidCredentials)):
             return lValidCredentials == rValidCredentials
@@ -35,8 +35,8 @@ extension AuthenticationScheme: Equatable {
 }
 
 public struct LoginState: Equatable {
-    let authenticationScheme: AuthenticationScheme
-    let ssoDomains: [String]
+    public let authenticationScheme: AuthenticationScheme
+    public let ssoDomains: [String]
     init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
         self.authenticationScheme = authenticationScheme
         self.ssoDomains = ssoDomains

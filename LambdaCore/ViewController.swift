@@ -10,11 +10,18 @@ import UIKit
 import LambdaCoreCore
 import LambdaCoreApplication
 class ViewController: UIViewController {
+    var orchestrator: LoginOrchestrator!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let m = Model()
-        let o = LoginOrchestrator()
-        // Do any additional setup after loading the view, typically from a nib.
+        orchestrator = LoginOrchestrator { [weak self] state in
+            self?.render(state)
+        }
+        orchestrator.receive(.credentialInfoInput(username: "user@gmail.com", password: ""))
+    }
+    func render(_ state: LoginState) {
+        if case state.authenticationScheme = AuthenticationScheme.sso {
+            print("animating sso button")
+        }
     }
 }
 
