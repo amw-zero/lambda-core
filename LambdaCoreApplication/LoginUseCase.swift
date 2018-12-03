@@ -18,6 +18,7 @@ enum Effect {
 
 enum AuthenticationScheme {
     case password(validCredentials: Bool)
+    case sso
 }
 
 extension AuthenticationScheme: Equatable {
@@ -25,14 +26,20 @@ extension AuthenticationScheme: Equatable {
         switch (lhs, rhs) {
         case (.password(let lValidCredentials), .password(let rValidCredentials)):
             return lValidCredentials == rValidCredentials
+        case (.sso, .sso):
+            return true
+        default:
+            return false
         }
     }
 }
 
 struct LoginState: Equatable {
     let authenticationScheme: AuthenticationScheme
-    init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false)) {
+    let ssoDomains: [String]
+    init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
         self.authenticationScheme = authenticationScheme
+        self.ssoDomains = ssoDomains
     }
 }
 
@@ -41,15 +48,27 @@ struct LoginUseCase {
         switch action {
         case .initiateLogin:
             return (state, .viewTransition)
-        case .credentialInfoInput(let username, let password):
-            if validInput(username, password) {
-                return (LoginState(authenticationScheme: .password(validCredentials: true)), nil)
-            } else {
-                return (state, nil)
-            }
+        case .credentialInfoInput(let userName, let password):
+            return credentialCheck(userName, password, state)
         }
     }
-    func validInput(_ userName: String, _ password: String) -> Bool {
+    func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
+        if isEmail(userName, in: state.ssoDomains) {
+            let nextState = LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
+            return (nextState, nil)
+        } else if isValidCredentials(userName, password) {
+            let nextState = LoginState(authenticationScheme: .password(validCredentials: true), ssoDomains: state.ssoDomains)
+            return (nextState, nil)
+        } else {
+            return (state, nil)
+        }
+    }
+    func isValidCredentials(_ userName: String, _ password: String) -> Bool {
         return !userName.isEmpty && !password.isEmpty
+    }
+    func isEmail(_ userName: String, in ssoDomains: [String]) -> Bool {
+        return ssoDomains.contains { (ssoDomain) -> Bool in
+            return userName.contains(ssoDomain)
+        }
     }
 }
