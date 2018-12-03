@@ -8,9 +8,16 @@
 
 import Foundation
 import LambdaCoreCore
-// This can probably be made generic, a la the Elm runtime.
-public struct LoginOrchestrator {
-    public init() {
-        let m = Model()
+// This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
+public class LoginOrchestrator {
+    let useCase: LoginUseCase = LoginUseCase()
+    var state: LoginState = LoginState()
+    let onNewState: (LoginState) -> Void
+    public init(onNewState: @escaping (LoginState) -> Void) {
+        self.onNewState = onNewState
+    }
+    public func receive(_ action: LoginAction) {
+        let (newState, _) = useCase.receive(action, inState: state)
+        state = newState
     }
 }

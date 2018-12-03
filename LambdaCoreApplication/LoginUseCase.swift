@@ -7,7 +7,7 @@
 //
 
 import Foundation
-enum LoginAction {
+public enum LoginAction {
     case initiateLogin
     case credentialInfoInput(username: String, password: String)
 }
@@ -34,7 +34,7 @@ extension AuthenticationScheme: Equatable {
     }
 }
 
-struct LoginState: Equatable {
+public struct LoginState: Equatable {
     let authenticationScheme: AuthenticationScheme
     let ssoDomains: [String]
     init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
