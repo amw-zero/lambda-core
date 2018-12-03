@@ -39,7 +39,8 @@ class LambdaCoreApplicationTests: XCTestCase {
             .credentialInfoInput(username: username, password: password),
             inState: loginState
         )
+        let expectedAuthenticationScheme = AuthenticationScheme.password(validCredentials: true)
         XCTAssertEqual(effect, nil)
-        XCTAssertEqual(state, LoginState(validEmail: true))
+        XCTAssertEqual(state, LoginState(authenticationScheme: expectedAuthenticationScheme))
     }
 }

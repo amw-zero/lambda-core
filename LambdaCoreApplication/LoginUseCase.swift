@@ -16,10 +16,23 @@ enum Effect {
     case viewTransition
 }
 
+enum AuthenticationScheme {
+    case password(validCredentials: Bool)
+}
+
+extension AuthenticationScheme: Equatable {
+    static func == (lhs: AuthenticationScheme, rhs: AuthenticationScheme) -> Bool {
+        switch (lhs, rhs) {
+        case (.password(let lValidCredentials), .password(let rValidCredentials)):
+            return lValidCredentials == rValidCredentials
+        }
+    }
+}
+
 struct LoginState: Equatable {
-    let validEmail: Bool
-    init(validEmail: Bool = false) {
-        self.validEmail = validEmail
+    let authenticationScheme: AuthenticationScheme
+    init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false)) {
+        self.authenticationScheme = authenticationScheme
     }
 }
 
@@ -30,12 +43,10 @@ struct LoginUseCase {
             return (state, .viewTransition)
         case .credentialInfoInput(let username, let password):
             if validInput(username, password) {
-                return (LoginState(validEmail: true), nil)
+                return (LoginState(authenticationScheme: .password(validCredentials: true)), nil)
             } else {
                 return (state, nil)
             }
-        default:
-            return (state, nil)
         }
     }
     func validInput(_ userName: String, _ password: String) -> Bool {
