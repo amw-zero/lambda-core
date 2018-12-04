@@ -9,7 +9,7 @@
 import Foundation
 public enum LoginAction {
     case initiateLogin
-    case credentialInfoInput(username: String, password: String)
+    case credentialInfoInput(userName: String, password: String)
 }
 
 enum Effect {
@@ -60,7 +60,8 @@ struct LoginUseCase {
             let nextState = LoginState(authenticationScheme: .password(validCredentials: true), ssoDomains: state.ssoDomains)
             return (nextState, nil)
         } else {
-            return (state, nil)
+            let nextState = LoginState(authenticationScheme: .password(validCredentials: false), ssoDomains: state.ssoDomains)
+            return (nextState, nil)
         }
     }
     func isValidCredentials(_ userName: String, _ password: String) -> Bool {

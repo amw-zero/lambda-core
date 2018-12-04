@@ -23,7 +23,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         let username = ""
         let password = ""
         let (state, effect) = useCase.receive(
-            .credentialInfoInput(username: username, password: password),
+            .credentialInfoInput(userName: username, password: password),
             inState: loginState
         )
         XCTAssertEqual(effect, nil)
@@ -36,7 +36,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         let username = "user@email.com"
         let password = "Test1234"
         let (state, effect) = useCase.receive(
-            .credentialInfoInput(username: username, password: password),
+            .credentialInfoInput(userName: username, password: password),
             inState: loginState
         )
         let expectedAuthenticationScheme = AuthenticationScheme.password(validCredentials: true)
@@ -50,7 +50,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         let username = "user@gmail.com"
         let password = ""
         let (state, effect) = useCase.receive(
-            .credentialInfoInput(username: username, password: password),
+            .credentialInfoInput(userName: username, password: password),
             inState: loginState
         )
         XCTAssertEqual(effect, nil)
@@ -58,6 +58,22 @@ class LambdaCoreApplicationTests: XCTestCase {
             authenticationScheme: AuthenticationScheme.sso,
             ssoDomains: ["gmail.com"]
         )
+        XCTAssertEqual(state, expectedLoginState)
+    }
+    func testWhenSSOEmailIsChangedToNonSSOEmail() {
+        let useCase = LoginUseCase()
+        let loginState = LoginState(authenticationScheme: .sso, ssoDomains: [])
+        
+        let email = "user@anywhere.com"
+        let password = ""
+        let (state, effect) = useCase.receive(
+            .credentialInfoInput(userName: email, password: password),
+            inState: loginState
+        )
+        let expectedLoginState = LoginState(
+            authenticationScheme: AuthenticationScheme.password(validCredentials: false)
+        )
+        XCTAssertNil(effect)
         XCTAssertEqual(state, expectedLoginState)
     }
 }
