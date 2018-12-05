@@ -47,7 +47,6 @@ public class LoginOrchestrator {
                 }
                 self?.receive(action)
             }
-            print(5)
         default:
             break
         }

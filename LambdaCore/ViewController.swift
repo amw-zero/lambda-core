@@ -37,10 +37,14 @@ class ViewController: UIViewController {
             guard let strongSelf = self else {
                 return
             }
-            if case state.authenticationScheme = AuthenticationScheme.sso {
+            switch state.authenticationScheme {
+            case .sso:
                 strongSelf.transformLoginButton(topPadding: 60.0, isHidden: true, title: "Login with SSO")
-            } else {
+            case let .password(validCredentials):
                 strongSelf.transformLoginButton(topPadding: 90.0, isHidden: false, title: "Login")
+                let loginButtonColor = validCredentials ? UIColor.blue : UIColor.lightGray
+                strongSelf.loginButton.isEnabled = validCredentials
+                strongSelf.loginButton.setTitleColor(loginButtonColor, for: .normal)
             }
         }
     }
