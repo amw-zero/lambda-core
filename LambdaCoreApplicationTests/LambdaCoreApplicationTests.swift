@@ -9,12 +9,28 @@
 import XCTest
 @testable import LambdaCoreApplication
 class LambdaCoreApplicationTests: XCTestCase {
-    func testInitiateLogin() {
+    func testInitiateLoginFetchesSSODomains() {
         let useCase = LoginUseCase()
         let loginState = LoginState()
         let (state, effect) = useCase.receive(.initiateLogin, inState: loginState)
-        XCTAssertEqual(effect, Effect.viewTransition)
+        let expectedEffect = Effect.httpRequest(
+            method: "get",
+            path: "api/sso_domains",
+            completion: { LoginAction.ssoDomainsReceived([$0]) }
+        )
+        guard let efct = effect else {
+            XCTFail("Expected effect was not returned")
+            return
+        }
+        XCTAssertEqual(efct, expectedEffect)
         XCTAssertEqual(state, LoginState())
+    }
+    func testWhenSSODomainsAreReturned() {
+        let useCase = LoginUseCase()
+        let loginState = LoginState()
+        let (state, effect) = useCase.receive(LoginAction.ssoDomainsReceived(["test@sso.com"]), inState: loginState)
+        XCTAssertNil(effect)
+        XCTAssertEqual(state.ssoDomains, ["test@sso.com"])
     }
     func testWhenNonSSOEmailAndPasswordAreNotInput() {
         let useCase = LoginUseCase()
@@ -26,7 +42,7 @@ class LambdaCoreApplicationTests: XCTestCase {
             .credentialInfoInput(userName: username, password: password),
             inState: loginState
         )
-        XCTAssertEqual(effect, nil)
+        XCTAssertNil(effect)
         XCTAssertEqual(state, LoginState())
     }
     func testWhenValidNonSSOEmailAndPasswordAreInput() {
@@ -40,7 +56,7 @@ class LambdaCoreApplicationTests: XCTestCase {
             inState: loginState
         )
         let expectedAuthenticationScheme = AuthenticationScheme.password(validCredentials: true)
-        XCTAssertEqual(effect, nil)
+        XCTAssertNil(effect)
         XCTAssertEqual(state, LoginState(authenticationScheme: expectedAuthenticationScheme))
     }
     func testWhenEmailUsesSSO() {
@@ -53,7 +69,7 @@ class LambdaCoreApplicationTests: XCTestCase {
             .credentialInfoInput(userName: username, password: password),
             inState: loginState
         )
-        XCTAssertEqual(effect, nil)
+        XCTAssertNil(effect)
         let expectedLoginState = LoginState(
             authenticationScheme: AuthenticationScheme.sso,
             ssoDomains: ["gmail.com"]

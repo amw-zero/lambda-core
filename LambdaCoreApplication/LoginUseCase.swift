@@ -7,31 +7,21 @@
 //
 
 import Foundation
+
 public enum LoginAction {
     case initiateLogin
     case credentialInfoInput(userName: String, password: String)
+    case ssoDomainsReceived([String])
 }
 
 enum Effect {
     case viewTransition
+    case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
 }
 
 public enum AuthenticationScheme {
     case password(validCredentials: Bool)
     case sso
-}
-
-extension AuthenticationScheme: Equatable {
-    public static func == (lhs: AuthenticationScheme, rhs: AuthenticationScheme) -> Bool {
-        switch (lhs, rhs) {
-        case (.password(let lValidCredentials), .password(let rValidCredentials)):
-            return lValidCredentials == rValidCredentials
-        case (.sso, .sso):
-            return true
-        default:
-            return false
-        }
-    }
 }
 
 public struct LoginState: Equatable {
@@ -47,13 +37,22 @@ struct LoginUseCase {
     func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect?) {
         switch action {
         case .initiateLogin:
-            return (state, .viewTransition)
+            let request = Effect.httpRequest(
+                method: "get",
+                path: "api/sso_domains",
+                completion: { .ssoDomainsReceived([$0]) }
+            )
+            return (state, request)
         case .credentialInfoInput(let userName, let password):
             return credentialCheck(userName, password, state)
+        case .ssoDomainsReceived(let ssoDomains):
+            let nextState = LoginState(authenticationScheme: state.authenticationScheme, ssoDomains: ssoDomains)
+            return (nextState, nil)
         }
     }
     func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
         if isEmail(userName, in: state.ssoDomains) {
+            // Want to update only 1 (or N) properties, not specify all each time
             let nextState = LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
             return (nextState, nil)
         } else if isValidCredentials(userName, password) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5DD4C3521B76F32006E81EF /* LoginUseCaseProtocolConformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */; };
 		A5E5A49121B36631003E80CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A49021B36631003E80CF /* AppDelegate.swift */; };
 		A5E5A49321B36631003E80CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A49221B36631003E80CF /* ViewController.swift */; };
 		A5E5A49621B36631003E80CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E5A49421B36631003E80CF /* Main.storyboard */; };
@@ -103,6 +104,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseProtocolConformance.swift; sourceTree = "<group>"; };
 		A5E5A48D21B36631003E80CF /* LambdaCore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LambdaCore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E5A49021B36631003E80CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5E5A49221B36631003E80CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				A5E5A4DD21B367D8003E80CF /* Info.plist */,
 				A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */,
 				A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */,
+				A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */,
 			);
 			path = LambdaCoreApplication;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 			files = (
 				A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */,
 				A5E5A50021B36C73003E80CF /* LoginUseCase.swift in Sources */,
+				A5DD4C3521B76F32006E81EF /* LoginUseCaseProtocolConformance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

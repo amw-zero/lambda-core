@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         }
         emailTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
+        orchestrator.receive(.initiateLogin)
     }
     func render(_ state: LoginState) {
         UIView.animate(withDuration: 1.0) { [weak self] in
