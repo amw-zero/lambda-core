@@ -71,7 +71,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertEqual(state, expectedLoginState)
     }
     func testWhenSSOEmailIsChangedToNonSSOEmail() {
-        let loginState = LoginState(authenticationScheme: .sso, ssoDomains: [])
+        let loginState = LoginState(ssoDomains: [])
         
         let email = "user@anywhere.com"
         let password = ""
