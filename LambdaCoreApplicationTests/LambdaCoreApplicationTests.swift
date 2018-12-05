@@ -9,9 +9,13 @@
 import XCTest
 @testable import LambdaCoreApplication
 class LambdaCoreApplicationTests: XCTestCase {
+    var useCase: LoginUseCase!
+    var loginState: LoginState!
+    override func setUp() {
+        useCase = LoginUseCase()
+        loginState = LoginState()
+    }
     func testInitiateLoginFetchesSSODomains() {
-        let useCase = LoginUseCase()
-        let loginState = LoginState()
         let (state, effect) = useCase.receive(.initiateLogin, inState: loginState)
         let expectedEffect = Effect.httpRequest(
             method: "get",
@@ -26,16 +30,11 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertEqual(state, LoginState())
     }
     func testWhenSSODomainsAreReturned() {
-        let useCase = LoginUseCase()
-        let loginState = LoginState()
         let (state, effect) = useCase.receive(LoginAction.ssoDomainsReceived(["test@sso.com"]), inState: loginState)
         XCTAssertNil(effect)
         XCTAssertEqual(state.ssoDomains, ["test@sso.com"])
     }
     func testWhenNonSSOEmailAndPasswordAreNotInput() {
-        let useCase = LoginUseCase()
-        let loginState = LoginState()
-        
         let username = ""
         let password = ""
         let (state, effect) = useCase.receive(
@@ -46,9 +45,6 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertEqual(state, LoginState())
     }
     func testWhenValidNonSSOEmailAndPasswordAreInput() {
-        let useCase = LoginUseCase()
-        let loginState = LoginState()
-        
         let username = "user@email.com"
         let password = "Test1234"
         let (state, effect) = useCase.receive(
@@ -60,9 +56,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertEqual(state, LoginState(authenticationScheme: expectedAuthenticationScheme))
     }
     func testWhenEmailUsesSSO() {
-        let useCase = LoginUseCase()
         let loginState = LoginState(ssoDomains: ["gmail.com"])
-        
         let username = "user@gmail.com"
         let password = ""
         let (state, effect) = useCase.receive(
@@ -77,7 +71,6 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertEqual(state, expectedLoginState)
     }
     func testWhenSSOEmailIsChangedToNonSSOEmail() {
-        let useCase = LoginUseCase()
         let loginState = LoginState(authenticationScheme: .sso, ssoDomains: [])
         
         let email = "user@anywhere.com"
