@@ -62,7 +62,7 @@ struct LoginUseCase {
         }
     }
     func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
-        if isEmail(userName, in: state.ssoDomains) {
+        if email(userName, isWithin: state.ssoDomains) {
             // Want to update only 1 (or N) properties, not specify all each time
             let nextState = LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
             return (nextState, nil)
@@ -77,7 +77,7 @@ struct LoginUseCase {
     func isValidCredentials(_ userName: String, _ password: String) -> Bool {
         return !userName.isEmpty && !password.isEmpty
     }
-    func isEmail(_ userName: String, in ssoDomains: [String]) -> Bool {
+    func email(_ userName: String, isWithin ssoDomains: [String]) -> Bool {
         return ssoDomains.contains { (ssoDomain) -> Bool in
             return userName.contains(ssoDomain)
         }
