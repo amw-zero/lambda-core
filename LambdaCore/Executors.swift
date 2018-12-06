@@ -11,23 +11,18 @@ import LambdaCoreApplication
 
 struct ViewControllerFactory {
     static func from(view: View, withOrchestrator orchestrator: LoginOrchestrator) -> UIViewController {
+        var storyboardName: String
         switch view {
         case .home:
-            let storyboard = UIStoryboard(name: "Home", bundle: nil)
-            let vc =  storyboard.instantiateInitialViewController()!
-            var orchestratable = vc as! Orchestratable
-            setOrchestrator(orchestrator, on: &orchestratable)
-            return vc
+            storyboardName = "Home"
         case .login:
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc =  storyboard.instantiateInitialViewController()!
-            var orchestratable = vc as! Orchestratable
-            setOrchestrator(orchestrator, on: &orchestratable)
-            return vc
+            storyboardName = "Main"
         }
-    }
-    static func setOrchestrator(_ orchestrator: LoginOrchestrator, on orchestratable: inout Orchestratable) {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let vc = storyboard.instantiateInitialViewController()!
+        var orchestratable = vc as! Orchestratable
         orchestratable.orchestrator = orchestrator
+        return vc
     }
 }
 
