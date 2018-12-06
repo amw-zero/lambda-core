@@ -31,6 +31,10 @@ public protocol ExecutorProducer {
     func executorFor(effect: Effect, withOrchestrator: LoginOrchestrator) -> Executor
 }
 
+public protocol Orchestratable {
+    var orchestrator: LoginOrchestrator! { get set }
+}
+
 // This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
 public class LoginOrchestrator {
     let useCase: LoginUseCase = LoginUseCase()
