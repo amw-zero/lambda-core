@@ -10,12 +10,20 @@ import Foundation
 
 public enum LoginAction {
     case initiateLogin
+    case handleLoggedInUser
     case credentialInfoInput(userName: String, password: String)
     case ssoDomainsReceived([String])
 }
 
-enum Effect {
+public enum View {
+    case home
+    case login
+}
+
+public enum Effect {
+    case composite([Effect])
     case viewTransition
+    case setRootView(view: View)
     case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
 }
 
@@ -42,7 +50,10 @@ struct LoginUseCase {
                 path: "api/sso_domains",
                 completion: { .ssoDomainsReceived([$0]) }
             )
-            return (state, request)
+            let setRootView = Effect.setRootView(view: .login)
+            return (state, .composite([request, setRootView]))
+        case .handleLoggedInUser:
+            return (state, .setRootView(view: .home))
         case .credentialInfoInput(let userName, let password):
             return credentialCheck(userName, password, state)
         case .ssoDomainsReceived(let ssoDomains):

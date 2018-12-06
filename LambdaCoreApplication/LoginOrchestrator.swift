@@ -23,12 +23,22 @@ struct HTTPRequestExecutor {
     }
 }
 
+public protocol Executor {
+    func execute()
+}
+
+public protocol ExecutorProducer {
+    func executorFor(effect: Effect, withOrchestrator: LoginOrchestrator) -> Executor
+}
+
 // This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
 public class LoginOrchestrator {
     let useCase: LoginUseCase = LoginUseCase()
     var state: LoginState = LoginState()
-    let onNewState: (LoginState) -> Void
-    public init(onNewState: @escaping (LoginState) -> Void) {
+    public var onNewState: (LoginState) -> Void
+    let executorFactory: ExecutorProducer
+    public init(executorFactory: ExecutorProducer, onNewState: @escaping (LoginState) -> Void) {
+        self.executorFactory = executorFactory
         self.onNewState = onNewState
     }
     public func receive(_ action: LoginAction) {
@@ -47,6 +57,9 @@ public class LoginOrchestrator {
                 }
                 self?.receive(action)
             }
+        case .setRootView, .composite:
+            executorFactory.executorFor(effect: efct, withOrchestrator: self).execute()
+            break
         default:
             break
         }

@@ -24,7 +24,7 @@ extension LoginAction: Equatable {
 }
 
 extension Effect: Equatable {
-    static func == (lhs: Effect, rhs: Effect) -> Bool {
+    public static func == (lhs: Effect, rhs: Effect) -> Bool {
         switch (lhs, rhs) {
         case (.viewTransition, .viewTransition):
             return true
@@ -33,6 +33,10 @@ extension Effect: Equatable {
             .httpRequest(let rMethod, let rPath, let rCompletion)
             ):
             return lMethod == rMethod && lPath == rPath && lCompletion("dummy") == rCompletion("dummy")
+        case (let .setRootView(lView), let .setRootView(rView)):
+        return lView == rView
+        case (let composite(lEffects), let composite(rEffects)):
+            return lEffects == rEffects
         default:
             return false
         }

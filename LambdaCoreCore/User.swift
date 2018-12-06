@@ -1,5 +1,5 @@
 //
-//  Model.swift
+//  User.swift
 //  LambdaCoreCore
 //
 //  Created by Alex Weisberger on 12/1/18.
@@ -7,7 +7,9 @@
 //
 
 import Foundation
-public struct Model {
-    public init() {
+public struct User {
+    public let email: String
+    public init(email: String) {
+        self.email = email
     }
 }
