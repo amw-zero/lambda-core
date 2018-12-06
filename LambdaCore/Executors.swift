@@ -50,7 +50,7 @@ struct CompositeExecutor: Executor {
             appState.executorFactory.executorFor(
                 effect: effect,
                 withOrchestrator: orchestrator
-                ).execute()
+            ).execute()
         }
     }
 }
