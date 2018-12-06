@@ -8,23 +8,8 @@
 
 import Foundation
 
-extension LoginAction: Equatable {
-    public static func == (lhs: LoginAction, rhs: LoginAction) -> Bool {
-        switch (lhs, rhs) {
-        case (.initiateLogin, .initiateLogin):
-            return true
-        case (let .credentialInfoInput(lUserName, lPassword), let .credentialInfoInput(rUserName, rPassword)):
-            return lUserName == rUserName && lPassword == rPassword
-        case (let .ssoDomainsReceived(lDomains), let .ssoDomainsReceived(rDomains)):
-            return lDomains == rDomains
-        default:
-            return false
-        }
-    }
-}
-
 extension Effect: Equatable {
-    static func == (lhs: Effect, rhs: Effect) -> Bool {
+    public static func == (lhs: Effect, rhs: Effect) -> Bool {
         switch (lhs, rhs) {
         case (.viewTransition, .viewTransition):
             return true
@@ -33,19 +18,10 @@ extension Effect: Equatable {
             .httpRequest(let rMethod, let rPath, let rCompletion)
             ):
             return lMethod == rMethod && lPath == rPath && lCompletion("dummy") == rCompletion("dummy")
-        default:
-            return false
-        }
-    }
-}
-
-extension AuthenticationScheme: Equatable {
-    public static func == (lhs: AuthenticationScheme, rhs: AuthenticationScheme) -> Bool {
-        switch (lhs, rhs) {
-        case (.password(let lValidCredentials), .password(let rValidCredentials)):
-            return lValidCredentials == rValidCredentials
-        case (.sso, .sso):
-            return true
+        case (let .setRootView(lView), let .setRootView(rView)):
+        return lView == rView
+        case (let composite(lEffects), let composite(rEffects)):
+            return lEffects == rEffects
         default:
             return false
         }

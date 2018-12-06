@@ -15,7 +15,7 @@ enum LoginButtonState {
     case sso
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, Orchestratable {
     var loginButtonState: LoginButtonState = .password
     var orchestrator: LoginOrchestrator!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -25,12 +25,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var loginButtonTopConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
-        orchestrator = LoginOrchestrator { [weak self] state in
+        orchestrator.onNewState = { [weak self] state in
             self?.render(state)
         }
         emailTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
-        orchestrator.receive(.initiateLogin)
     }
     func render(_ state: LoginState) {
         UIView.animate(withDuration: 1.0) { [weak self] in

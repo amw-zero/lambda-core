@@ -8,18 +8,26 @@
 
 import Foundation
 
-public enum LoginAction {
+public enum LoginAction: Equatable {
     case initiateLogin
+    case handleLoggedInUser
     case credentialInfoInput(userName: String, password: String)
     case ssoDomainsReceived([String])
 }
 
-enum Effect {
+public enum View {
+    case home
+    case login
+}
+
+public enum Effect {
+    case composite([Effect])
     case viewTransition
+    case setRootView(view: View)
     case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
 }
 
-public enum AuthenticationScheme {
+public enum AuthenticationScheme: Equatable {
     case password(validCredentials: Bool)
     case sso
 }
@@ -42,7 +50,10 @@ struct LoginUseCase {
                 path: "api/sso_domains",
                 completion: { .ssoDomainsReceived([$0]) }
             )
-            return (state, request)
+            let setRootView = Effect.setRootView(view: .login)
+            return (state, .composite([request, setRootView]))
+        case .handleLoggedInUser:
+            return (state, .setRootView(view: .home))
         case .credentialInfoInput(let userName, let password):
             return credentialCheck(userName, password, state)
         case .ssoDomainsReceived(let ssoDomains):
@@ -51,7 +62,7 @@ struct LoginUseCase {
         }
     }
     func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
-        if isEmail(userName, in: state.ssoDomains) {
+        if email(userName, isWithin: state.ssoDomains) {
             // Want to update only 1 (or N) properties, not specify all each time
             let nextState = LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
             return (nextState, nil)
@@ -66,7 +77,7 @@ struct LoginUseCase {
     func isValidCredentials(_ userName: String, _ password: String) -> Bool {
         return !userName.isEmpty && !password.isEmpty
     }
-    func isEmail(_ userName: String, in ssoDomains: [String]) -> Bool {
+    func email(_ userName: String, isWithin ssoDomains: [String]) -> Bool {
         return ssoDomains.contains { (ssoDomain) -> Bool in
             return userName.contains(ssoDomain)
         }

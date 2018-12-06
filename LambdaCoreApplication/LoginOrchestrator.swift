@@ -9,26 +9,26 @@
 import Foundation
 import LambdaCoreCore
 
-
-struct HTTPRequest {
-    let method: String
-    let path: String
+public protocol Executor {
+    func execute(withOrchestrator: LoginOrchestrator)
 }
 
-struct HTTPRequestExecutor {
-    func execute(request:  HTTPRequest, callback: @escaping (String) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-            callback("gmail.com")
-        }
-    }
+public protocol ExecutorProducer {
+    func executorFor(effect: Effect) -> Executor
+}
+
+public protocol Orchestratable {
+    var orchestrator: LoginOrchestrator! { get set }
 }
 
 // This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
 public class LoginOrchestrator {
     let useCase: LoginUseCase = LoginUseCase()
     var state: LoginState = LoginState()
-    let onNewState: (LoginState) -> Void
-    public init(onNewState: @escaping (LoginState) -> Void) {
+    public var onNewState: (LoginState) -> Void
+    let executorFactory: ExecutorProducer
+    public init(executorFactory: ExecutorProducer, onNewState: @escaping (LoginState) -> Void) {
+        self.executorFactory = executorFactory
         self.onNewState = onNewState
     }
     public func receive(_ action: LoginAction) {
@@ -38,17 +38,6 @@ public class LoginOrchestrator {
         guard let efct = effect else {
             return
         }
-        switch efct {
-        case let .httpRequest(method, path, completion):
-            let request = HTTPRequest(method: method, path: path)
-            HTTPRequestExecutor().execute(request: request) { [weak self] response in
-                guard let action = completion(response) else {
-                    return
-                }
-                self?.receive(action)
-            }
-        default:
-            break
-        }
+        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
     }
 }

@@ -15,13 +15,15 @@ class LambdaCoreApplicationTests: XCTestCase {
         useCase = LoginUseCase()
         loginState = LoginState()
     }
-    func testInitiateLoginFetchesSSODomains() {
+    func testWhenUserIsNotLoggedIn() {
         let (state, effect) = useCase.receive(.initiateLogin, inState: loginState)
-        let expectedEffect = Effect.httpRequest(
+        let request = Effect.httpRequest(
             method: "get",
             path: "api/sso_domains",
             completion: { LoginAction.ssoDomainsReceived([$0]) }
         )
+        let setRootView = Effect.setRootView(view: .login)
+        let expectedEffect = Effect.composite([request, setRootView])
         guard let efct = effect else {
             XCTFail("Expected effect was not returned")
             return
@@ -84,5 +86,14 @@ class LambdaCoreApplicationTests: XCTestCase {
         )
         XCTAssertNil(effect)
         XCTAssertEqual(state, expectedLoginState)
+    }
+    func testWhenUserIsLoggedIn() {
+        let (state, effect) = useCase.receive(.handleLoggedInUser, inState: loginState)
+        guard let efct = effect else {
+            XCTFail("Expected effect was not returned")
+            return
+        }
+        XCTAssertEqual(efct, .setRootView(view: .home))
+        XCTAssertEqual(state, state)
     }
 }
