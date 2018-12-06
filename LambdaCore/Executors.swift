@@ -29,45 +29,67 @@ struct ViewControllerFactory {
 struct RootViewExecutor: Executor {
     let window: UIWindow
     let view: View
-    let orchestrator: LoginOrchestrator
-    func execute() {
+    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
         window.rootViewController = ViewControllerFactory.from(view: view, withOrchestrator: orchestrator)
         window.makeKeyAndVisible()
     }
 }
 
-struct NullRootViewExecutor: Executor {
-    func execute() {
+struct NullExecutor: Executor {
+    func execute(withOrchestrator: LoginOrchestrator) {
         
+    }
+}
+
+struct HTTPRequest {
+    let method: String
+    let path: String
+}
+
+struct HTTPRequestExecutor: Executor {
+    let httpRequest: HTTPRequest
+    let completion: (String) -> LoginAction?
+    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            guard let action = self.completion("gmail.com") else {
+                return
+            }
+            orchestrator.receive(action)
+        }
     }
 }
 
 struct CompositeExecutor: Executor {
     let effects: [Effect]
-    let orchestrator: LoginOrchestrator
-    func execute() {
+    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
         for effect in effects {
-            appState.executorFactory.executorFor(
-                effect: effect,
-                withOrchestrator: orchestrator
-            ).execute()
+            appState.executorFactory.executorFor(effect: effect)
+                .execute(withOrchestrator: orchestrator)
         }
     }
 }
 
 struct ExecutorFactory: ExecutorProducer {
     weak var window: UIWindow?
-    func executorFor(effect: Effect, withOrchestrator orchestrator: LoginOrchestrator) -> Executor {
+    func executorFor(effect: Effect) -> Executor {
         switch effect {
         case let .setRootView(view):
             guard let wdw = window else {
-                return NullRootViewExecutor()
+                return NullExecutor()
             }
-            return RootViewExecutor(window: wdw, view: view, orchestrator: orchestrator)
+            return RootViewExecutor(window: wdw, view: view)
         case let .composite(effects):
-            return CompositeExecutor(effects: effects, orchestrator: orchestrator)
+            return CompositeExecutor(effects: effects)
+        case .httpRequest:
+            if case let .httpRequest(method, path, completion) = effect {
+                let httpRequest = HTTPRequest(method: method, path: path)
+                return HTTPRequestExecutor(httpRequest: httpRequest, completion: completion)
+            } else {
+                return NullExecutor()
+            }
+
         default:
-            return NullRootViewExecutor()
+            return NullExecutor()
         }
     }
 }

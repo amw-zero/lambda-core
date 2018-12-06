@@ -9,26 +9,12 @@
 import Foundation
 import LambdaCoreCore
 
-
-struct HTTPRequest {
-    let method: String
-    let path: String
-}
-
-struct HTTPRequestExecutor {
-    func execute(request:  HTTPRequest, callback: @escaping (String) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-            callback("gmail.com")
-        }
-    }
-}
-
 public protocol Executor {
-    func execute()
+    func execute(withOrchestrator: LoginOrchestrator)
 }
 
 public protocol ExecutorProducer {
-    func executorFor(effect: Effect, withOrchestrator: LoginOrchestrator) -> Executor
+    func executorFor(effect: Effect) -> Executor
 }
 
 public protocol Orchestratable {
@@ -52,20 +38,6 @@ public class LoginOrchestrator {
         guard let efct = effect else {
             return
         }
-        switch efct {
-        case let .httpRequest(method, path, completion):
-            let request = HTTPRequest(method: method, path: path)
-            HTTPRequestExecutor().execute(request: request) { [weak self] response in
-                guard let action = completion(response) else {
-                    return
-                }
-                self?.receive(action)
-            }
-        case .setRootView, .composite:
-            executorFactory.executorFor(effect: efct, withOrchestrator: self).execute()
-            break
-        default:
-            break
-        }
+        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
     }
 }
