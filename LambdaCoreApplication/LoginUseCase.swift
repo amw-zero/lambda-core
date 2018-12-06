@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum LoginAction {
+public enum LoginAction: Equatable {
     case initiateLogin
     case handleLoggedInUser
     case credentialInfoInput(userName: String, password: String)
@@ -27,7 +27,7 @@ public enum Effect {
     case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
 }
 
-public enum AuthenticationScheme {
+public enum AuthenticationScheme: Equatable {
     case password(validCredentials: Bool)
     case sso
 }
