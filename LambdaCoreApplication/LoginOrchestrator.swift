@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import LambdaCoreCore
+import LambdaCoreModel
 
 public protocol Executor {
     func execute(withOrchestrator: LoginOrchestrator)

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import LambdaCoreCore
+import LambdaCoreModel
 import LambdaCoreApplication
 
 struct AppState {
