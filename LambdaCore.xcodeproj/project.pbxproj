@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51C6BF621BC168300A18954 /* AssetTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A51C6BF521BC168300A18954 /* AssetTVC.xib */; };
+		A51C6BF821BC16D600A18954 /* AssetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51C6BF721BC16D600A18954 /* AssetTVC.swift */; };
+		A51C6BFA21BC1BEC00A18954 /* ViewAssetsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51C6BF921BC1BEC00A18954 /* ViewAssetsUseCase.swift */; };
+		A51C6BFC21BC1C1400A18954 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51C6BFB21BC1C1400A18954 /* Asset.swift */; };
 		A5DD4C3521B76F32006E81EF /* LoginUseCaseProtocolConformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */; };
 		A5DD4C6521B8BDF2006E81EF /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5DD4C6421B8BDF2006E81EF /* Home.storyboard */; };
 		A5DD4C6721B8C92A006E81EF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DD4C6621B8C92A006E81EF /* HomeViewController.swift */; };
@@ -107,6 +111,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A51C6BF521BC168300A18954 /* AssetTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetTVC.xib; sourceTree = "<group>"; };
+		A51C6BF721BC16D600A18954 /* AssetTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTVC.swift; sourceTree = "<group>"; };
+		A51C6BF921BC1BEC00A18954 /* ViewAssetsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAssetsUseCase.swift; sourceTree = "<group>"; };
+		A51C6BFB21BC1C1400A18954 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseProtocolConformance.swift; sourceTree = "<group>"; };
 		A5DD4C6421B8BDF2006E81EF /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		A5DD4C6621B8C92A006E81EF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +227,8 @@
 			children = (
 				A5E5A49021B36631003E80CF /* AppDelegate.swift */,
 				A5E5A49721B36632003E80CF /* Assets.xcassets */,
+				A51C6BF721BC16D600A18954 /* AssetTVC.swift */,
+				A51C6BF521BC168300A18954 /* AssetTVC.xib */,
 				A5DD4C6821B8CA70006E81EF /* Executors.swift */,
 				A5DD4C6421B8BDF2006E81EF /* Home.storyboard */,
 				A5DD4C6621B8C92A006E81EF /* HomeViewController.swift */,
@@ -242,8 +252,9 @@
 		A5E5A4B621B36726003E80CF /* LambdaCoreModel */ = {
 			isa = PBXGroup;
 			children = (
-				A5E5A4B721B36726003E80CF /* LambdaCoreModel.h */,
+				A51C6BFB21BC1C1400A18954 /* Asset.swift */,
 				A5E5A4B821B36726003E80CF /* Info.plist */,
+				A5E5A4B721B36726003E80CF /* LambdaCoreModel.h */,
 				A5E5A4D321B36741003E80CF /* User.swift */,
 			);
 			path = LambdaCoreModel;
@@ -261,11 +272,12 @@
 		A5E5A4DB21B367D8003E80CF /* LambdaCoreApplication */ = {
 			isa = PBXGroup;
 			children = (
-				A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */,
 				A5E5A4DD21B367D8003E80CF /* Info.plist */,
+				A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */,
 				A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */,
 				A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */,
 				A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */,
+				A51C6BF921BC1BEC00A18954 /* ViewAssetsUseCase.swift */,
 			);
 			path = LambdaCoreApplication;
 			sourceTree = "<group>";
@@ -478,6 +490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E5A49B21B36632003E80CF /* LaunchScreen.storyboard in Resources */,
+				A51C6BF621BC168300A18954 /* AssetTVC.xib in Resources */,
 				A5E5A49821B36632003E80CF /* Assets.xcassets in Resources */,
 				A5E5A49621B36631003E80CF /* Main.storyboard in Resources */,
 				A5DD4C6521B8BDF2006E81EF /* Home.storyboard in Resources */,
@@ -527,6 +540,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DD4C6921B8CA70006E81EF /* Executors.swift in Sources */,
+				A51C6BF821BC16D600A18954 /* AssetTVC.swift in Sources */,
 				A5E5A49321B36631003E80CF /* ViewController.swift in Sources */,
 				A5E5A49121B36631003E80CF /* AppDelegate.swift in Sources */,
 				A5DD4C6721B8C92A006E81EF /* HomeViewController.swift in Sources */,
@@ -545,6 +559,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51C6BFC21BC1C1400A18954 /* Asset.swift in Sources */,
 				A5E5A4D421B36741003E80CF /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */,
+				A51C6BFA21BC1BEC00A18954 /* ViewAssetsUseCase.swift in Sources */,
 				A5E5A50021B36C73003E80CF /* LoginUseCase.swift in Sources */,
 				A5DD4C3521B76F32006E81EF /* LoginUseCaseProtocolConformance.swift in Sources */,
 			);
