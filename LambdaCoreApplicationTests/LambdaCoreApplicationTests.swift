@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import LambdaCoreModel
 @testable import LambdaCoreApplication
 class LambdaCoreApplicationTests: XCTestCase {
     var useCase: LoginUseCase!
@@ -87,13 +88,31 @@ class LambdaCoreApplicationTests: XCTestCase {
         XCTAssertNil(effect)
         XCTAssertEqual(state, expectedLoginState)
     }
-    func testWhenUserIsLoggedIn() {
-        let (state, effect) = useCase.receive(.handleLoggedInUser, inState: loginState)
+    func testWhenLoginButtonIsPressedAndLoginSucceeds() {
+        let userName = "user@email.com"
+        let password = "Password123"
+        let loginAction = LoginAction.attemptLogin(withUserName: userName, andPassword: password)
+        let (state, effect) = useCase.receive(loginAction, inState: loginState)
+        let loginRequest = Effect.httpRequest(
+            method: "get",
+            path: "/api/sign_in",
+            completion: { .loginSucceeded(forUser: UserParser.user(from: $0)) }
+        )
+        guard let efct = effect else {
+            XCTFail("Expected effect was not produced")
+            return
+        }
+        XCTAssertEqual(efct, loginRequest)
+        XCTAssertEqual(state, loginState)
+    }
+    func testWhenLoginSucceeds() {
+        let user = User(email: "email.com")
+        let (state, effect) = useCase.receive(.loginSucceeded(forUser: user), inState: loginState)
         guard let efct = effect else {
             XCTFail("Expected effect was not returned")
             return
         }
         XCTAssertEqual(efct, .setRootView(view: .home))
-        XCTAssertEqual(state, state)
+        XCTAssertEqual(state, loginState)
     }
 }

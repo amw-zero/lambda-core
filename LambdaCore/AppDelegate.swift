@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         appState.executorFactory = ExecutorFactory(window: window)
         let orchestrator = LoginOrchestrator(executorFactory: appState.executorFactory) { _ in }
-        if appState.currentUser != nil {
-            orchestrator.receive(.handleLoggedInUser)
+        if let user = appState.currentUser {
+            orchestrator.receive(.loginSucceeded(forUser: user))
         } else {
             orchestrator.receive(.initiateLogin)
         }

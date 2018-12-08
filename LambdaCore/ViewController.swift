@@ -23,6 +23,7 @@ class ViewController: UIViewController, Orchestratable {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginButtonTopConstraint: NSLayoutConstraint!
+    // MARK - UIViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         orchestrator.onNewState = { [weak self] state in
@@ -31,6 +32,7 @@ class ViewController: UIViewController, Orchestratable {
         emailTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
     }
+    // MARK - LoginOrchestrator
     func render(_ state: LoginState) {
         UIView.animate(withDuration: 1.0) { [weak self] in
             guard let strongSelf = self else {
@@ -51,8 +53,18 @@ class ViewController: UIViewController, Orchestratable {
     }
     @objc func textChanged(_ textField: UITextField) {
         orchestrator.receive(
-            .credentialInfoInput(userName: emailTextField.text ?? "", password: passwordTextField.text ?? "")
-        )
+            .credentialInfoInput(
+                userName: text(from: emailTextField),
+                password: text(from: passwordTextField)))
+    }
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        orchestrator.receive(
+            .attemptLogin(
+                withUserName: text(from: emailTextField),
+                andPassword: text(from: passwordTextField)))
+    }
+    func text(from textField: UITextField) -> String {
+        return textField.text ?? ""
     }
     func transformLoginButton(topPadding: CGFloat, isHidden: Bool, title: String) {
         loginButtonTopConstraint.constant = topPadding

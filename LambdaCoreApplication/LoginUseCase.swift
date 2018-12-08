@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import LambdaCoreModel
 
 public enum LoginAction: Equatable {
     case initiateLogin
-    case handleLoggedInUser
     case credentialInfoInput(userName: String, password: String)
     case ssoDomainsReceived([String])
+    case attemptLogin(withUserName: String, andPassword: String)
+    case loginSucceeded(forUser: User)
 }
 
 public enum View {
@@ -22,7 +24,7 @@ public enum View {
 
 public enum Effect {
     case composite([Effect])
-    case viewTransition
+    case viewTransition(toView: View)
     case setRootView(view: View)
     case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
 }
@@ -52,13 +54,19 @@ struct LoginUseCase {
             )
             let setRootView = Effect.setRootView(view: .login)
             return (state, .composite([request, setRootView]))
-        case .handleLoggedInUser:
-            return (state, .setRootView(view: .home))
         case .credentialInfoInput(let userName, let password):
             return credentialCheck(userName, password, state)
         case .ssoDomainsReceived(let ssoDomains):
             let nextState = LoginState(authenticationScheme: state.authenticationScheme, ssoDomains: ssoDomains)
             return (nextState, nil)
+        case .attemptLogin:
+            let request = Effect.httpRequest(
+                method: "get",
+                path: "/api/sign_in",
+                completion: { .loginSucceeded(forUser: UserParser.user(from: $0)) })
+            return (state, request)
+        case .loginSucceeded:
+            return (state, .setRootView(view: .home))
         }
     }
     func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
@@ -81,5 +89,11 @@ struct LoginUseCase {
         return ssoDomains.contains { (ssoDomain) -> Bool in
             return userName.contains(ssoDomain)
         }
+    }
+}
+
+struct UserParser {
+    static func user(from email: String) -> User {
+        return User(email: email)
     }
 }
