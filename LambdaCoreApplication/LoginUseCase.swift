@@ -43,8 +43,10 @@ public struct LoginState: Equatable {
     }
 }
 
-struct LoginUseCase {
-    func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect?) {
+public struct LoginUseCase: UseCase {
+    public init() {
+    }
+    public func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect?) {
         switch action {
         case .initiateLogin:
             let request = Effect.httpRequest(

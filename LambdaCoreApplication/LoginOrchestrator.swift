@@ -28,19 +28,20 @@ public protocol Orchestratable {
 public protocol UseCase {
     associatedtype State
     associatedtype Action
+    init()
     func receive(_ action: Action, inState state: State) -> (State, Effect?)
 }
+
 
 // This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
 public class LoginOrchestrator<UseCaseT: UseCase, ExProducer: ExecutorProducer> {
     public typealias State = UseCaseT.State
     public typealias Action = UseCaseT.Action
-    let useCase: UseCaseT
+    let useCase: UseCaseT = UseCaseT()
     var state: State
     public var onNewState: (State) -> Void
     let executorFactory: ExProducer
-    public init(useCase: UseCaseT, state: State, executorFactory: ExProducer, onNewState: @escaping (State) -> Void) {
-        self.useCase = useCase
+    public init(state: State, executorFactory: ExProducer, onNewState: @escaping (State) -> Void) {
         self.state = state
         self.executorFactory = executorFactory
         self.onNewState = onNewState
@@ -52,7 +53,7 @@ public class LoginOrchestrator<UseCaseT: UseCase, ExProducer: ExecutorProducer> 
         guard let efct = effect else {
             return
         }
-        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
+//        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
     }
 }
 

@@ -15,9 +15,9 @@ enum LoginButtonState {
     case sso
 }
 
-class ViewController: UIViewController, Orchestratable {
+class ViewController: UIViewController {
     var loginButtonState: LoginButtonState = .password
-    var orchestrator: LoginOrchestrator!
+    var orchestrator: LoginOrchestrator<LoginUseCase, ExecutorFactory>!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
