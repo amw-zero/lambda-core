@@ -10,7 +10,7 @@ import UIKit
 import LambdaCoreApplication
 
 struct ViewControllerFactory {
-    static func from(view: View, withOrchestrator orchestrator: LoginOrchestrator) -> UIViewController {
+    static func from<UseCase>(view: View, withOrchestrator orchestrator: LoginOrchestrator<UseCase>) -> UIViewController {
         var storyboardName: String
         switch view {
         case .home:
@@ -20,24 +20,25 @@ struct ViewControllerFactory {
         }
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let vc = storyboard.instantiateInitialViewController()!
-        var orchestratable = vc as! Orchestratable
-        orchestratable.orchestrator = orchestrator
+        attach(orchestrator: orchestrator, toOrchestratable: vc)
         return vc
+    }
+    static func attach<T: Orchestratable>(orchestrator: LoginOrchestrator<T.UseCaseT>, toOrchestratable orchestratable: inout T) {
+        orchestratable.orchestrator = orchestrator
     }
 }
 
 struct RootViewExecutor: Executor {
     let window: UIWindow
     let view: View
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
+    func execute<UseCase>(withOrchestrator orchestrator: LoginOrchestrator<UseCase>) {
         window.rootViewController = ViewControllerFactory.from(view: view, withOrchestrator: orchestrator)
         window.makeKeyAndVisible()
     }
 }
 
 struct NullExecutor: Executor {
-    func execute(withOrchestrator: LoginOrchestrator) {
-        
+    func execute<UseCase>(withOrchestrator orchestrator: LoginOrchestrator<UseCase>) {
     }
 }
 
@@ -46,10 +47,11 @@ struct HTTPRequest {
     let path: String
 }
 
-struct HTTPRequestExecutor: Executor {
+struct HTTPRequestExecutor<CallbackAction>: Executor {
+    typealias Action = CallbackAction
     let httpRequest: HTTPRequest
-    let completion: (String) -> LoginAction?
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
+    let completion: (String) -> CallbackAction?
+    func execute<UseCase>(withOrchestrator orchestrator: LoginOrchestrator<UseCase>) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             guard let action = self.completion("gmail.com") else {
                 return
@@ -61,7 +63,7 @@ struct HTTPRequestExecutor: Executor {
 
 struct CompositeExecutor: Executor {
     let effects: [Effect]
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
+    func execute<UseCase>(withOrchestrator orchestrator: LoginOrchestrator<UseCase>) {
         for effect in effects {
             appState.executorFactory.executorFor(effect: effect)
                 .execute(withOrchestrator: orchestrator)
@@ -87,7 +89,6 @@ struct ExecutorFactory: ExecutorProducer {
             } else {
                 return NullExecutor()
             }
-
         default:
             return NullExecutor()
         }

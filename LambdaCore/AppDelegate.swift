@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         appState.executorFactory = ExecutorFactory(window: window)
-        let orchestrator = LoginOrchestrator(executorFactory: appState.executorFactory) { _ in }
+        let orchestrator = LoginOrchestrator<LoginUseCase>(state: LoginState(), executorFactory: appState.executorFactory) { _ in }
         if let user = appState.currentUser {
             orchestrator.receive(.loginSucceeded(forUser: user))
         } else {

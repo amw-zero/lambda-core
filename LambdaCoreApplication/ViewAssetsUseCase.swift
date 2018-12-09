@@ -8,6 +8,11 @@
 
 import Foundation
 import LambdaCoreModel
+
+public struct ViewAssetsAction {
+    
+}
+
 public struct ViewAssetsState {
     public let assets: [Asset]
     public init(assets: [Asset] = []) {
@@ -15,6 +20,11 @@ public struct ViewAssetsState {
     }
 }
 
-struct ViewAssetsUseCase {
-    
+public struct ViewAssetsUseCase: UseCase {
+    public init() {
+        
+    }
+    public func receive(_ action: ViewAssetsAction, inState state: ViewAssetsState) -> (ViewAssetsState, Effect?) {
+        return (ViewAssetsState(), nil)
+    }
 }

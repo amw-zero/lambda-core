@@ -10,7 +10,7 @@ import UIKit
 import LambdaCoreApplication
 class HomeViewController: UIViewController, Orchestratable {
     @IBOutlet weak var tableView: UITableView!
-    var orchestrator: LoginOrchestrator!
+    var orchestrator: LoginOrchestrator<ViewAssetsUseCase>!
     var viewAssetsState: ViewAssetsState = ViewAssetsState()
     override func viewDidLoad() {
         super.viewDidLoad()

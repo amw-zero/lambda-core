@@ -37,7 +37,7 @@ public enum AuthenticationScheme: Equatable {
 public struct LoginState: Equatable {
     public let authenticationScheme: AuthenticationScheme
     public let ssoDomains: [String]
-    init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
+    public init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
         self.authenticationScheme = authenticationScheme
         self.ssoDomains = ssoDomains
     }

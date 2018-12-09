@@ -10,19 +10,16 @@ import Foundation
 import LambdaCoreModel
 
 public protocol Executor {
-    associatedtype UseCaseT: UseCase
-    associatedtype ExProducer: ExecutorProducer
-    func execute(withOrchestrator: LoginOrchestrator<UseCaseT, ExProducer>)
+    func execute<UseCaseT: UseCase>(withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>)
 }
 
 public protocol ExecutorProducer {
-    func executorFor<T: Executor>(effect: Effect) -> T
+    func executorFor(effect: Effect) -> Executor
 }
 
 public protocol Orchestratable {
     associatedtype UseCaseT: UseCase
-    associatedtype ExProducer: ExecutorProducer
-    var orchestrator: LoginOrchestrator<UseCaseT, ExProducer>! { get set }
+    var orchestrator: LoginOrchestrator<UseCaseT>! { get set }
 }
 
 public protocol UseCase {
@@ -32,16 +29,15 @@ public protocol UseCase {
     func receive(_ action: Action, inState state: State) -> (State, Effect?)
 }
 
-
 // This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
-public class LoginOrchestrator<UseCaseT: UseCase, ExProducer: ExecutorProducer> {
+public class LoginOrchestrator<UseCaseT: UseCase> {
     public typealias State = UseCaseT.State
     public typealias Action = UseCaseT.Action
     let useCase: UseCaseT = UseCaseT()
     var state: State
     public var onNewState: (State) -> Void
-    let executorFactory: ExProducer
-    public init(state: State, executorFactory: ExProducer, onNewState: @escaping (State) -> Void) {
+    let executorFactory: ExecutorProducer
+    public init(state: State, executorFactory: ExecutorProducer, onNewState: @escaping (State) -> Void) {
         self.state = state
         self.executorFactory = executorFactory
         self.onNewState = onNewState
@@ -53,7 +49,7 @@ public class LoginOrchestrator<UseCaseT: UseCase, ExProducer: ExecutorProducer> 
         guard let efct = effect else {
             return
         }
-//        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
+        executorFactory.executorFor(effect: efct).execute(withOrchestrator: self)
     }
 }
 
