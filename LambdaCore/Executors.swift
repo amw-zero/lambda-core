@@ -10,7 +10,7 @@ import UIKit
 import LambdaCoreApplication
 
 struct ViewControllerFactory {
-    static func from<UseCase>(view: View, withOrchestrator orchestrator: LoginOrchestrator<UseCase>) -> UIViewController {
+    static func from<UseCase>(view: View, withOrchestrator orchestrator: Orchestrator<UseCase>) -> UIViewController {
         var storyboardName: String
         switch view {
         case .home:
@@ -23,22 +23,21 @@ struct ViewControllerFactory {
         switch view {
         case .home:
             let homeVC = vc as! HomeViewController
-            homeVC.orchestrator = LoginOrchestrator<ViewAssetsUseCase>(state: ViewAssetsState(), executorFactory: appState.executorFactory) { _ in }
+            homeVC.orchestrator = Orchestrator<ViewAssetsUseCase>(state: ViewAssetsState(), executorFactory: appState.executorFactory) { _ in }
         case .login:
             let loginVC = vc as! ViewController
-            loginVC.orchestrator = LoginOrchestrator(state: LoginState(), executorFactory: appState.executorFactory) { _ in }
+            loginVC.orchestrator = Orchestrator(state: LoginState(), executorFactory: appState.executorFactory) { _ in }
         }
         return vc
     }
-    static func attach<T: Orchestratable>(orchestrator: LoginOrchestrator<T.UseCaseT>, toOrchestratable orchestratable: inout T) {
+    static func attach<T: Orchestratable>(orchestrator: Orchestrator<T.UseCaseT>, toOrchestratable orchestratable: inout T) {
         orchestratable.orchestrator = orchestrator
     }
 }
 
 struct RootViewExecutor: Executor {
     let window: UIWindow
-    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>) {
-        print("changing root view")
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
         if case let .setRootView(view) = effect {
             window.rootViewController = ViewControllerFactory.from(view: view, withOrchestrator: orchestrator)
             window.makeKeyAndVisible()
@@ -47,7 +46,7 @@ struct RootViewExecutor: Executor {
 }
 
 struct NullExecutor: Executor {
-    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>) {
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
     }
 }
 
@@ -57,7 +56,7 @@ struct HTTPRequest {
 }
 
 struct HTTPRequestExecutor: Executor {
-    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>) {
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
         guard case let .httpRequest(method, path, completion) = effect else {
             return
         }
@@ -72,7 +71,7 @@ struct HTTPRequestExecutor: Executor {
 }
 
 struct CompositeExecutor: Executor {
-    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>) {
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
         guard case let .composite(effects) = effect else {
             return
         }

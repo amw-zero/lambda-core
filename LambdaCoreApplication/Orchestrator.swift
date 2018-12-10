@@ -10,7 +10,7 @@ import Foundation
 import LambdaCoreModel
 
 public protocol Executor {
-    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: LoginOrchestrator<UseCaseT>)
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>)
 }
 
 public protocol ExecutorProducer {
@@ -19,7 +19,7 @@ public protocol ExecutorProducer {
 
 public protocol Orchestratable {
     associatedtype UseCaseT: UseCase
-    var orchestrator: LoginOrchestrator<UseCaseT>! { get set }
+    var orchestrator: Orchestrator<UseCaseT>! { get set }
 }
 
 public protocol UseCase {
@@ -56,8 +56,7 @@ public enum Effect<Action> {
     }
 }
 
-// This can probably be made generic, a la the Elm runtime. Orchestrator<UseCase, UseCaseState>
-public class LoginOrchestrator<UseCaseT: UseCase> {
+public class Orchestrator<UseCaseT: UseCase> {
     public typealias State = UseCaseT.State
     public typealias Action = UseCaseT.Action
     let useCase: UseCaseT = UseCaseT()

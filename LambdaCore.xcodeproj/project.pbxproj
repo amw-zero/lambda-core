@@ -32,7 +32,7 @@
 		A5E5A4EC21B367D8003E80CF /* LambdaCoreApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5E5A4EF21B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; };
 		A5E5A4F021B367D8003E80CF /* LambdaCoreApplication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */; };
+		A5E5A4F821B367FA003E80CF /* Orchestrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4F721B367FA003E80CF /* Orchestrator.swift */; };
 		A5E5A50021B36C73003E80CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -142,7 +142,7 @@
 		A5E5A4E221B367D8003E80CF /* LambdaCoreApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambdaCoreApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaCoreApplicationTests.swift; sourceTree = "<group>"; };
 		A5E5A4EB21B367D8003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOrchestrator.swift; sourceTree = "<group>"; };
+		A5E5A4F721B367FA003E80CF /* Orchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orchestrator.swift; sourceTree = "<group>"; };
 		A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -274,9 +274,9 @@
 			children = (
 				A5E5A4DD21B367D8003E80CF /* Info.plist */,
 				A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */,
-				A5E5A4F721B367FA003E80CF /* LoginOrchestrator.swift */,
 				A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */,
 				A5DD4C3421B76F32006E81EF /* LoginUseCaseProtocolConformance.swift */,
+				A5E5A4F721B367FA003E80CF /* Orchestrator.swift */,
 				A51C6BF921BC1BEC00A18954 /* ViewAssetsUseCase.swift */,
 			);
 			path = LambdaCoreApplication;
@@ -576,7 +576,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E5A4F821B367FA003E80CF /* LoginOrchestrator.swift in Sources */,
+				A5E5A4F821B367FA003E80CF /* Orchestrator.swift in Sources */,
 				A51C6BFA21BC1BEC00A18954 /* ViewAssetsUseCase.swift in Sources */,
 				A5E5A50021B36C73003E80CF /* LoginUseCase.swift in Sources */,
 				A5DD4C3521B76F32006E81EF /* LoginUseCaseProtocolConformance.swift in Sources */,
