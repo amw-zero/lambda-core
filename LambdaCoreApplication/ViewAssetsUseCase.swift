@@ -24,7 +24,7 @@ public struct ViewAssetsUseCase: UseCase {
     public init() {
         
     }
-    public func receive(_ action: ViewAssetsAction, inState state: ViewAssetsState) -> (ViewAssetsState, Effect?) {
+    public func receive(_ action: ViewAssetsAction, inState state: ViewAssetsState) -> (ViewAssetsState, Effect<ViewAssetsAction>?) {
         return (ViewAssetsState(), nil)
     }
 }

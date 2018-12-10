@@ -11,12 +11,16 @@ import LambdaCoreModel
 import LambdaCoreApplication
 
 struct AppState {
-    let currentUser: User?
-    var executorFactory: ExecutorFactory!
+    var currentUser: User?
+    var executorFactory: ExecutorFactory
+    init(currentUser: User? = nil, executorFactory: ExecutorFactory = ExecutorFactory(window: nil)) {
+        self.currentUser = currentUser
+        self.executorFactory = executorFactory
+    }
 }
 // let user = User(email: "alex.weisberger@viewthespace.com")
 var user: User?
-var appState = AppState(currentUser: user, executorFactory: nil)
+var appState = AppState(currentUser: user)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
