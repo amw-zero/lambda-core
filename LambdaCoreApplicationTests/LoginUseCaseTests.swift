@@ -1,6 +1,6 @@
 //
-//  LambdaCoreApplicationTests.swift
-//  LambdaCoreApplicationTests
+//  LoginUseCaseTests.swift
+//  LoginUseCaseTests
 //
 //  Created by Alex Weisberger on 12/1/18.
 //  Copyright © 2018 vts. All rights reserved.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import LambdaCoreModel
 @testable import LambdaCoreApplication
-class LambdaCoreApplicationTests: XCTestCase {
+class LoginUseCaseTests: XCTestCase {
     var useCase: LoginUseCase!
     var loginState: LoginState!
     override func setUp() {

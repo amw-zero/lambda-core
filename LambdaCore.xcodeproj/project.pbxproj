@@ -28,7 +28,7 @@
 		A5E5A4CB21B36726003E80CF /* LambdaCoreModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4B521B36726003E80CF /* LambdaCoreModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5E5A4D421B36741003E80CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4D321B36741003E80CF /* User.swift */; };
 		A5E5A4E321B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; };
-		A5E5A4EA21B367D8003E80CF /* LambdaCoreApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */; };
+		A5E5A4EA21B367D8003E80CF /* LoginUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E5A4E921B367D8003E80CF /* LoginUseCaseTests.swift */; };
 		A5E5A4EC21B367D8003E80CF /* LambdaCoreApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5E5A4EF21B367D8003E80CF /* LambdaCoreApplication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; };
 		A5E5A4F021B367D8003E80CF /* LambdaCoreApplication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5E5A4DA21B367D8003E80CF /* LambdaCoreApplication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -140,7 +140,7 @@
 		A5E5A4DC21B367D8003E80CF /* LambdaCoreApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LambdaCoreApplication.h; sourceTree = "<group>"; };
 		A5E5A4DD21B367D8003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5E5A4E221B367D8003E80CF /* LambdaCoreApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambdaCoreApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaCoreApplicationTests.swift; sourceTree = "<group>"; };
+		A5E5A4E921B367D8003E80CF /* LoginUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseTests.swift; sourceTree = "<group>"; };
 		A5E5A4EB21B367D8003E80CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5E5A4F721B367FA003E80CF /* Orchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orchestrator.swift; sourceTree = "<group>"; };
 		A5E5A4FF21B36C73003E80CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 		A5E5A4E821B367D8003E80CF /* LambdaCoreApplicationTests */ = {
 			isa = PBXGroup;
 			children = (
-				A5E5A4E921B367D8003E80CF /* LambdaCoreApplicationTests.swift */,
+				A5E5A4E921B367D8003E80CF /* LoginUseCaseTests.swift */,
 				A5E5A4EB21B367D8003E80CF /* Info.plist */,
 			);
 			path = LambdaCoreApplicationTests;
@@ -587,7 +587,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E5A4EA21B367D8003E80CF /* LambdaCoreApplicationTests.swift in Sources */,
+				A5E5A4EA21B367D8003E80CF /* LoginUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
