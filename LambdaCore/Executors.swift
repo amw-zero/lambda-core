@@ -10,7 +10,7 @@ import UIKit
 import LambdaCoreApplication
 
 struct ViewControllerFactory {
-    static func from(view: View, withOrchestrator orchestrator: LoginOrchestrator) -> UIViewController {
+    static func from<UseCase>(view: View, withOrchestrator orchestrator: Orchestrator<UseCase>) -> UIViewController {
         var storyboardName: String
         switch view {
         case .home:
@@ -20,24 +20,33 @@ struct ViewControllerFactory {
         }
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let vc = storyboard.instantiateInitialViewController()!
-        var orchestratable = vc as! Orchestratable
-        orchestratable.orchestrator = orchestrator
+        switch view {
+        case .home:
+            let homeVC = vc as! HomeViewController
+            homeVC.orchestrator = Orchestrator<ViewAssetsUseCase>(state: ViewAssetsState(), executorFactory: appState.executorFactory) { _ in }
+        case .login:
+            let loginVC = vc as! ViewController
+            loginVC.orchestrator = Orchestrator(state: LoginState(), executorFactory: appState.executorFactory) { _ in }
+        }
         return vc
+    }
+    static func attach<T: Orchestratable>(orchestrator: Orchestrator<T.UseCaseT>, toOrchestratable orchestratable: inout T) {
+        orchestratable.orchestrator = orchestrator
     }
 }
 
 struct RootViewExecutor: Executor {
     let window: UIWindow
-    let view: View
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
-        window.rootViewController = ViewControllerFactory.from(view: view, withOrchestrator: orchestrator)
-        window.makeKeyAndVisible()
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
+        if case let .setRootView(view) = effect {
+            window.rootViewController = ViewControllerFactory.from(view: view, withOrchestrator: orchestrator)
+            window.makeKeyAndVisible()
+        }
     }
 }
 
 struct NullExecutor: Executor {
-    func execute(withOrchestrator: LoginOrchestrator) {
-        
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
     }
 }
 
@@ -47,11 +56,13 @@ struct HTTPRequest {
 }
 
 struct HTTPRequestExecutor: Executor {
-    let httpRequest: HTTPRequest
-    let completion: (String) -> LoginAction?
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
+        guard case let .httpRequest(method, path, completion) = effect else {
+            return
+        }
+        let _: HTTPRequest = HTTPRequest(method: method, path: path)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-            guard let action = self.completion("gmail.com") else {
+            guard let action = completion("gmail.com") else {
                 return
             }
             orchestrator.receive(action)
@@ -60,34 +71,30 @@ struct HTTPRequestExecutor: Executor {
 }
 
 struct CompositeExecutor: Executor {
-    let effects: [Effect]
-    func execute(withOrchestrator orchestrator: LoginOrchestrator) {
-        for effect in effects {
-            appState.executorFactory.executorFor(effect: effect)
-                .execute(withOrchestrator: orchestrator)
+    func execute<UseCaseT: UseCase>(_ effect: Effect<UseCaseT.Action>, withOrchestrator orchestrator: Orchestrator<UseCaseT>) {
+        guard case let .composite(effects) = effect else {
+            return
+        }
+        for singleEffect in effects {
+            orchestrator.executorFactory.executorFor(effectType: singleEffect.type)
+                .execute(singleEffect, withOrchestrator: orchestrator)
         }
     }
 }
 
 struct ExecutorFactory: ExecutorProducer {
     weak var window: UIWindow?
-    func executorFor(effect: Effect) -> Executor {
-        switch effect {
-        case let .setRootView(view):
+    func executorFor(effectType: EffectType) -> Executor {
+        switch effectType {
+        case .setRootView:
             guard let wdw = window else {
                 return NullExecutor()
             }
-            return RootViewExecutor(window: wdw, view: view)
-        case let .composite(effects):
-            return CompositeExecutor(effects: effects)
+            return RootViewExecutor(window: wdw)
+        case .composite:
+            return CompositeExecutor()
         case .httpRequest:
-            if case let .httpRequest(method, path, completion) = effect {
-                let httpRequest = HTTPRequest(method: method, path: path)
-                return HTTPRequestExecutor(httpRequest: httpRequest, completion: completion)
-            } else {
-                return NullExecutor()
-            }
-
+            return HTTPRequestExecutor()
         default:
             return NullExecutor()
         }

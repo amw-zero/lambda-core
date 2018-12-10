@@ -23,7 +23,7 @@ class LambdaCoreApplicationTests: XCTestCase {
             path: "api/sso_domains",
             completion: { LoginAction.ssoDomainsReceived([$0]) }
         )
-        let setRootView = Effect.setRootView(view: .login)
+        let setRootView = Effect<LoginAction>.setRootView(view: .login)
         let expectedEffect = Effect.composite([request, setRootView])
         guard let efct = effect else {
             XCTFail("Expected effect was not returned")
@@ -96,7 +96,7 @@ class LambdaCoreApplicationTests: XCTestCase {
         let loginRequest = Effect.httpRequest(
             method: "get",
             path: "/api/sign_in",
-            completion: { .loginSucceeded(forUser: UserParser.user(from: $0)) }
+            completion: { LoginAction.loginSucceeded(forUser: UserParser.user(from: $0)) }
         )
         guard let efct = effect else {
             XCTFail("Expected effect was not produced")

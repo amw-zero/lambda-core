@@ -22,13 +22,6 @@ public enum View {
     case login
 }
 
-public enum Effect {
-    case composite([Effect])
-    case viewTransition(toView: View)
-    case setRootView(view: View)
-    case httpRequest(method: String, path: String, completion: (String) -> LoginAction?)
-}
-
 public enum AuthenticationScheme: Equatable {
     case password(validCredentials: Bool)
     case sso
@@ -37,25 +30,27 @@ public enum AuthenticationScheme: Equatable {
 public struct LoginState: Equatable {
     public let authenticationScheme: AuthenticationScheme
     public let ssoDomains: [String]
-    init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
+    public init(authenticationScheme: AuthenticationScheme = .password(validCredentials: false), ssoDomains: [String] = []) {
         self.authenticationScheme = authenticationScheme
         self.ssoDomains = ssoDomains
     }
 }
 
-struct LoginUseCase {
-    func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect?) {
+public struct LoginUseCase: UseCase {
+    public init() {
+    }
+    public func receive(_ action: LoginAction, inState state: LoginState) -> (LoginState, Effect<LoginAction>?) {
         switch action {
         case .initiateLogin:
             let request = Effect.httpRequest(
                 method: "get",
                 path: "api/sso_domains",
-                completion: { .ssoDomainsReceived([$0]) }
+                completion: { LoginAction.ssoDomainsReceived([$0]) }
             )
-            let setRootView = Effect.setRootView(view: .login)
+            let setRootView: Effect<LoginAction> = .setRootView(view: .login)
             return (state, .composite([request, setRootView]))
         case .credentialInfoInput(let userName, let password):
-            return credentialCheck(userName, password, state)
+            return (credentialCheck(userName, password, state), nil)
         case .ssoDomainsReceived(let ssoDomains):
             let nextState = LoginState(authenticationScheme: state.authenticationScheme, ssoDomains: ssoDomains)
             return (nextState, nil)
@@ -63,23 +58,20 @@ struct LoginUseCase {
             let request = Effect.httpRequest(
                 method: "get",
                 path: "/api/sign_in",
-                completion: { .loginSucceeded(forUser: UserParser.user(from: $0)) })
+                completion: { LoginAction.loginSucceeded(forUser: UserParser.user(from: $0)) })
             return (state, request)
         case .loginSucceeded:
             return (state, .setRootView(view: .home))
         }
     }
-    func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> (LoginState, Effect?) {
+    func credentialCheck(_ userName: String, _ password: String, _ state: LoginState) -> LoginState {
         if email(userName, isWithin: state.ssoDomains) {
             // Want to update only 1 (or N) properties, not specify all each time
-            let nextState = LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
-            return (nextState, nil)
+            return LoginState(authenticationScheme: .sso, ssoDomains: state.ssoDomains)
         } else if isValidCredentials(userName, password) {
-            let nextState = LoginState(authenticationScheme: .password(validCredentials: true), ssoDomains: state.ssoDomains)
-            return (nextState, nil)
+            return LoginState(authenticationScheme: .password(validCredentials: true), ssoDomains: state.ssoDomains)
         } else {
-            let nextState = LoginState(authenticationScheme: .password(validCredentials: false), ssoDomains: state.ssoDomains)
-            return (nextState, nil)
+            return LoginState(authenticationScheme: .password(validCredentials: false), ssoDomains: state.ssoDomains)
         }
     }
     func isValidCredentials(_ userName: String, _ password: String) -> Bool {
