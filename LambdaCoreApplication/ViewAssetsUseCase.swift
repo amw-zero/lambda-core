@@ -9,14 +9,17 @@
 import Foundation
 import LambdaCoreModel
 
-public struct ViewAssetsAction {
-    
+public enum ViewAssetsAction: Equatable {
+    case initiate
+    case assetsReceived([Asset])
 }
 
-public struct ViewAssetsState {
+public struct ViewAssetsState: Equatable {
     public let assets: [Asset]
-    public init(assets: [Asset] = []) {
+    public let isFetching: Bool
+    public init(assets: [Asset] = [], isFetching: Bool = false) {
         self.assets = assets
+        self.isFetching = false
     }
 }
 

@@ -8,6 +8,9 @@
 
 import Foundation
 
-public struct Asset {
+public struct Asset: Equatable {
     public let name: String
+    public init(name: String) {
+        self.name = name
+    }
 }
